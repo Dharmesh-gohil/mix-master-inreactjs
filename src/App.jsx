@@ -22,7 +22,8 @@ const router = createBrowserRouter([{
     }, {
       path: "newsLetter",
       element: <NewsLetter />,
-      action:newsletterAction,
+      action: newsletterAction,
+      errorElement:<SinglePageError/>
     }, {
       path: "about",
       element:<About/>
