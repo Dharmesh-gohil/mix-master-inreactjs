@@ -45,16 +45,19 @@ const NewsLetter = () => {
           className="form-input" />
       </div>
       {/* last-name */}
-      <div className="form-row">
-        <label htmlFor="last-name" className="form-label">Last-name:-</label>
-        <input type="text"
-          id="last-name"
-          name="last-name"
+      <div className='form-row'>
+        <label htmlFor='lastName' className='form-label'>
+          last name
+        </label>
+        <input
+          type='text'
+          className='form-input'
+          name='lastName'
+          id='lastName'
           defaultValue="smith"
-         required
-          className="form-input" />
-      </div>
-      {/* email */}
+          required
+        />
+      </div>      {/* email */}
       <div className="form-row">
         <label htmlFor="email"
           className="form-label">Email:-</label>
