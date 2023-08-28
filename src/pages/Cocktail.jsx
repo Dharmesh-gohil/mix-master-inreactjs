@@ -1,24 +1,44 @@
 import { useLoaderData,Link,Navigate } from "react-router-dom"
 import axios from "axios"
 import Wrapper from "../assets/wrappers/CocktailPage"
+import { useQuery } from "@tanstack/react-query";
 
 const singleCocktailUrl =
   'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 
-export const loader = async ({ params}) => { 
+const singleCocktailsQuery = (id) => { 
+  return {
+    queryKey: ["cocktail",id],
+    queryFn: async () => { 
+      const { data } = await axios.get(`${singleCocktailUrl}${id}`)
+      return data
+    }
+  }
+}
+
+export const loader =(queryClient)=>async ({ params}) => { 
   const { id } = params
+  await queryClient.ensureQueryData(singleCocktailsQuery(id))
   // const response = await axios.get(`${singleCocktailUrl}${id}`)
   // console.log(response)
-  const { data} = await axios.get(`${singleCocktailUrl}${id}`)
+  // const { data} = await axios.get(`${singleCocktailUrl}${id}`) for use query commented
 // console.log(data)
-  return {id,data}
+  // return {id,data}
+  //after use of query we modified it 
+  return {id}
 
 }
 
 const Cocktail = () => {
-  const { data, id } = useLoaderData()
+  // const { data, id } = useLoaderData()
+  // for use of query we change it
+  const { id } = useLoaderData(singleCocktailsQuery(id))
 
   // if(!data) return <h2>something went wrong...</h2>
+
+  const { data } = useQuery()
+  
+  //below code is for server so no need to change it further
     if(!data) return <Navigate to="/" />
 
 
@@ -47,7 +67,7 @@ const Cocktail = () => {
   return (
     <Wrapper>
       <header>
-        <Link to="/" style={{textDecoration:"underline"}}>Back-to-Home</Link>
+        <Link to="/"  className="btn">Back-to-Home</Link>
         <h3>{ name}</h3>
       </header>
       <div className="drink">
