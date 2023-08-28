@@ -32,11 +32,11 @@ export const loader =(queryClient)=>async ({ params}) => {
 const Cocktail = () => {
   // const { data, id } = useLoaderData()
   // for use of query we change it
-  const { id } = useLoaderData(singleCocktailsQuery(id))
+  const { id } = useLoaderData()
 
   // if(!data) return <h2>something went wrong...</h2>
 
-  const { data } = useQuery()
+  const { data } = useQuery(singleCocktailsQuery(id))
   
   //below code is for server so no need to change it further
     if(!data) return <Navigate to="/" />
