@@ -7,6 +7,10 @@ const newsletterUrl = 'https://www.course-api.com/cocktails-newsletter';
 
 export const action = async ({ request }) => { 
   console.log(request)
+  //here we have to use Form from react-router dom it is use ful in vite
+  //loader useful in prefetching of data while action useful after submitting of data
+  //to any address or method
+  //action is like same loader it take request as parameter 
   //it is same like loader it must return something like null or anything
   //it is always need name attributes in form otherwise it will not work
   //to check empty values form must "required" attributes

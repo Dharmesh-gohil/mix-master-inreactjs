@@ -27,17 +27,20 @@ const router = createBrowserRouter([{
       errorElement: <SinglePageError />,
       //here we pass queryClient in actually we invoking that function so we can access  inside the loader funtion 
       loader: landingLoader(queryClient),
-    }, {
+    },
+    {
       path: "cocktail/:id",
       errorElement: <SinglePageError />,
       loader:singleCocktailLoader(queryClient),
       element: <Cocktail />,
-    }, {
+    },
+    {
       path: "newsLetter",
       element: <NewsLetter />,
       action: newsletterAction,
       errorElement:<SinglePageError/>
-    }, {
+    },
+    {
       path: "about",
       element:<About/>
     },

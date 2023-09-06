@@ -10,10 +10,11 @@ import { Router, useNavigation } from "react-router-dom"
 // but in new React Router dom loader is function which fetch data before
 //it render so it provide prefetching of data and loader must return something
 // event at least null otherwise it will return error
-//always remember loader is not hook
+//always remember loader is not hook its function it also contain meny info 
+//like params ,request ,context also
 
-=====================================
-=====================================
+//=====================================
+//=====================================
 // useNavigation hook is most important it show what is happening in our
 //app now means current status of app if page is loading or submitting like
 //const navigation=useNavigation()

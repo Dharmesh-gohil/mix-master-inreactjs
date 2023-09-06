@@ -16,6 +16,7 @@ const singleCocktailsQuery = (id) => {
   }
 }
 
+//to access data like id in url we use special prop params which gives id and also request detailed to 
 export const loader =(queryClient)=>async ({ params}) => { 
   const { id } = params
   await queryClient.ensureQueryData(singleCocktailsQuery(id))
@@ -55,7 +56,7 @@ const Cocktail = () => {
   // console.log(singleDrink)
   //object.keys will convert all data into the array
 
-  // const value = Object.keys(singleDrink)
+  // const value = Object.keys(singleDrink) will convert so we can access  like lectno-386
   // console.log(value)
 
   const validIngredients = Object.keys(singleDrink).filter(
