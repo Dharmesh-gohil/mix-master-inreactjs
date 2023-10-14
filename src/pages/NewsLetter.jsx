@@ -7,6 +7,7 @@ const newsletterUrl = 'https://www.course-api.com/cocktails-newsletter';
 
 export const action = async ({ request }) => { 
   console.log(request)
+  //redirect is design only to use in loader and action function only .......
   //here we have to use Form from react-router dom it is use ful in vite
   //loader useful in prefetching of data while action useful after submitting of data
   //to any address or method

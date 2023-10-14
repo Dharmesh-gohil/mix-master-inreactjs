@@ -31,7 +31,10 @@ export const loader= (queryClient)=> async ({ request }) => {
 //  above we make loader a function that return another function
 //export const loader = async ({ request }) => { 
   console.log(request)
-  const url=new URL(request.url)
+  //this line will give url 
+  const url = new URL(request.url)
+  //url.searchParams.get("search") will give vallue of name =search from
+  //input box
   const searchTerm = url.searchParams.get("search") || ""
   await queryClient.ensureQueryData(searchCocktailsQuery(searchTerm))
   //here  ensureQueryData method will check in cach data if it there then
