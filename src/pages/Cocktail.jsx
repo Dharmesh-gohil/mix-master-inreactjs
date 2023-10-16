@@ -1,110 +1,119 @@
-import { useLoaderData,Link,Navigate } from "react-router-dom"
-import axios from "axios"
-import Wrapper from "../assets/wrappers/CocktailPage"
+import { useLoaderData, Link, Navigate } from "react-router-dom";
+import axios from "axios";
+import Wrapper from "../assets/wrappers/CocktailPage";
 import { useQuery } from "@tanstack/react-query";
 
 const singleCocktailUrl =
-  'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+  "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
 
-const singleCocktailsQuery = (id) => { 
+const singleCocktailsQuery = (id) => {
   return {
-    queryKey: ["cocktail",id],
-    queryFn: async () => { 
-      const { data } = await axios.get(`${singleCocktailUrl}${id}`)
-      return data
-    }
-  }
-}
+    queryKey: ["cocktail", id],
+    queryFn: async () => {
+      const { data } = await axios.get(`${singleCocktailUrl}${id}`);
+      return data;
+    },
+  };
+};
 
-//to access data like id in url we use special prop params which gives id and also request detailed to 
-export const loader =(queryClient)=>async ({ params}) => { 
-  const { id } = params
-  await queryClient.ensureQueryData(singleCocktailsQuery(id))
-  // const response = await axios.get(`${singleCocktailUrl}${id}`)
-  // console.log(response)
-  // const { data} = await axios.get(`${singleCocktailUrl}${id}`) for use query commented
-// console.log(data)
-  // return {id,data}
-  //after use of query we modified it 
-  return {id}
-
-}
+//to access data like id in url we use special prop params which gives id and also request detailed to
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    const { id } = params;
+    await queryClient.ensureQueryData(singleCocktailsQuery(id));
+    // const response = await axios.get(`${singleCocktailUrl}${id}`)
+    // console.log(response)
+    // const { data} = await axios.get(`${singleCocktailUrl}${id}`) for use query commented
+    // console.log(data)
+    // return {id,data}
+    //after use of query we modified it
+    return { id };
+  };
 
 const Cocktail = () => {
   // const { data, id } = useLoaderData()
   // for use of query we change it
-  const { id } = useLoaderData()
+  const { id } = useLoaderData();
 
   // if(!data) return <h2>something went wrong...</h2>
 
-  const { data } = useQuery(singleCocktailsQuery(id))
-  
+  const { data } = useQuery(singleCocktailsQuery(id));
+
   //below code is for server so no need to change it further
-    if(!data) return <Navigate to="/" />
+  if (!data) return <Navigate to="/" />;
 
-
-  const singleDrink = data.drinks[0]
+  const singleDrink = data.drinks[0];
   // console.log(singleDrink)
-  
+
   const {
     strDrink: name,
     strDrinkThumb: image,
     strAlcoholic: info,
     strCategory: category,
     strGlass: glass,
-    strInstructions: instructions } = singleDrink
+    strInstructions: instructions,
+  } = singleDrink;
   // console.log(singleDrink)
   //object.keys will convert all data into the array
 
   // const value = Object.keys(singleDrink) will convert so we can access  like lectno-386
   // console.log(value)
 
-  const validIngredients = Object.keys(singleDrink).filter(
-    (key) => key.startsWith("strIngredient") && singleDrink[key] !== null 
-  ).map((key) => singleDrink[key])
-  
-// console.log(validIngredients)
+  const validIngredients = Object.keys(singleDrink)
+    .filter(
+      (key) => key.startsWith("strIngredient") && singleDrink[key] !== null
+    )
+    .map((key) => singleDrink[key]);
+  // to get key value we pass key value in the singleDrink[key] so we get value of ingredients
+
+  console.log(validIngredients);
 
   return (
     <Wrapper>
       <header>
-        <Link to="/"  className="btn">Back-to-Home</Link>
-        <h3>{ name}</h3>
+        <Link to="/" className="btn">
+          Back-to-Home
+        </Link>
+        <h3>{name}</h3>
       </header>
       <div className="drink">
         <img src={image} alt={name} className="img" />
         <div className="drink-info">
           <p>
             <span className="drink-data">name:- </span>
-            { name}
+            {name}
           </p>
           <p>
             <span className="drink-data">category:- </span>
-            { category}
+            {category}
           </p>
           <p>
             <span className="drink-data">info:- </span>
-            { info}
+            {info}
           </p>
           <p>
             <span className="drink-data">glass:- </span>
-            { glass}
+            {glass}
           </p>
           <p>
             <span className="drink-data">ingredients:- </span>
-            {validIngredients.map((item, index) => { 
-              return <span className="ing" key={item}>
-                {item}{ index<validIngredients.length-1?",":""}
-              </span>
+            {validIngredients.map((item, index) => {
+              return (
+                <span className="ing" key={item}>
+                  {item}
+                  {index < validIngredients.length - 1 ? "," : ""}
+                </span>
+              );
             })}
           </p>
           <p>
             <span className="drink-data">instructions:- </span>
-            { instructions}
+            {instructions}
           </p>
         </div>
       </div>
     </Wrapper>
-  )
-}
-export default Cocktail
+  );
+};
+export default Cocktail;
